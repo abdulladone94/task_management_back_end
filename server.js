@@ -35,6 +35,21 @@ app.post("/create", (req, res) => {
   });
 });
 
+app.put("/update/:id", (req, res) => {
+  const updateTask =
+    "update task set `task`=? , `detail`=?, `date`=? where id=?";
+  const values = [
+    req.body.taskTitle,
+    req.body.taskDetails,
+    req.body.selectedDate.split("T")[0],
+  ];
+  const id = req.params.id;
+  db.query(updateTask, [...values, id], (err, data) => {
+    if (err) return res.json("Error");
+    return res.json(data);
+  });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
