@@ -10,7 +10,7 @@ app.use(cors());
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "1234",
+  password: "abdulla43005",
   database: "task_management",
 });
 
@@ -45,6 +45,16 @@ app.put("/update/:id", (req, res) => {
   ];
   const id = req.params.id;
   db.query(updateTask, [...values, id], (err, data) => {
+    if (err) return res.json("Error");
+    return res.json(data);
+  });
+});
+
+app.delete("/task/:id", (req, res) => {
+  const deleteTask = "DELETE FROM task where id=?";
+
+  const id = req.params.id;
+  db.query(deleteTask, [id], (err, data) => {
     if (err) return res.json("Error");
     return res.json(data);
   });
