@@ -22,6 +22,19 @@ app.get("/", (req, res) => {
   });
 });
 
+app.post("/create", (req, res) => {
+  const addTask = "INSERT INTO task (`task`, `detail`, `date`) VALUES (?)";
+  const values = [
+    req.body.taskTitle,
+    req.body.taskDetails,
+    req.body.selectedDate.split("T")[0],
+  ];
+  db.query(addTask, [values], (err, data) => {
+    if (err) return res.json("Error");
+    return res.json(data);
+  });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
